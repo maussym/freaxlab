@@ -1,3 +1,4 @@
+import type React from "react";
 import { useInView } from "../hooks/useInView";
 import { useI18n } from "../i18n/I18nContext";
 import { sectionShell } from "../lib/layout";
@@ -29,7 +30,7 @@ const features = [
   { icon: "icd", key: "docs.feat.icd" as const },
 ];
 
-const featureIcons: Record<string, JSX.Element> = {
+const featureIcons: Record<string, React.ReactNode> = {
   voice: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
       <rect x="9" y="2" width="6" height="12" rx="3" />
