@@ -3,6 +3,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
+const isVercelBuild = process.env.VERCEL === "1";
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
@@ -11,7 +13,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "../backend/static",
+    outDir: isVercelBuild ? "dist" : "../backend/static",
     emptyOutDir: true,
   },
   server: {
