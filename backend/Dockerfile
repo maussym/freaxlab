@@ -19,5 +19,6 @@ COPY . .
 # Открываем порт
 EXPOSE 8080
 
+# COPY vector_db/ /app/vector_db/
 # Запускаем приложение через uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
