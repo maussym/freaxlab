@@ -182,7 +182,10 @@ export default function HeroSection({ onStart }: Props) {
                 <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-qaz-lime opacity-0 group-hover:opacity-100 transition-opacity" />
                 {t("hero.startBtn")}
               </button>
-              <button className="px-6 lg:px-8 py-2.5 lg:py-3 border border-white/40 text-white font-mono text-xs lg:text-sm tracking-wider hover:bg-white/10 transition-all duration-200 cursor-pointer">
+              <button
+                onClick={() => document.getElementById("docs")?.scrollIntoView({ behavior: "smooth" })}
+                className="px-6 lg:px-8 py-2.5 lg:py-3 border border-white/40 text-white font-mono text-xs lg:text-sm tracking-wider hover:bg-white/10 transition-all duration-200 cursor-pointer"
+              >
                 {t("hero.docsBtn")}
               </button>
             </div>

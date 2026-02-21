@@ -3,6 +3,7 @@ import HeroSection from "./components/HeroSection";
 import HowItWorks from "./components/HowItWorks";
 import AboutProject from "./components/AboutProject";
 import Partners from "./components/Partners";
+import DocsSection from "./components/DocsSection";
 import Footer from "./components/Footer";
 import ChatWindow, { type Message } from "./components/ChatWindow";
 import { fetchDiagnosis } from "./api";
@@ -123,6 +124,9 @@ export default function App() {
         </div>
         <div className="section-lazy">
           <Partners />
+        </div>
+        <div className="section-lazy">
+          <DocsSection />
         </div>
         <Footer />
       </div>

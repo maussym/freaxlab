@@ -346,6 +346,51 @@ const translations = {
     kk: "Тарих жергілікті сақталады",
     en: "History stored locally",
   },
+  "docs.sectionTag": {
+    ru: "ДОКУМЕНТАЦИЯ",
+    kk: "ҚҰЖАТТАМА",
+    en: "DOCUMENTATION",
+  },
+  "docs.title": {
+    ru: "API",
+    kk: "API",
+    en: "API",
+  },
+  "docs.titleAccent": {
+    ru: "ДОКУМЕНТАЦИЯ",
+    kk: "ҚҰЖАТТАМА",
+    en: "DOCUMENTATION",
+  },
+  "docs.subtitle": {
+    ru: "Эндпоинт принимает симптомы и возвращает диагнозы с кодами МКБ-10",
+    kk: "Эндпоинт симптомдарды қабылдайды және МКБ-10 кодтарымен диагноздарды қайтарады",
+    en: "Endpoint accepts symptoms and returns diagnoses with ICD-10 codes",
+  },
+  "docs.feat.voice": {
+    ru: "Голосовой ввод симптомов на русском, казахском и английском",
+    kk: "Орыс, қазақ және ағылшын тілдерінде дауыстық енгізу",
+    en: "Voice input in Russian, Kazakh and English",
+  },
+  "docs.feat.i18n": {
+    ru: "Мультиязычный интерфейс KK / RU / EN с переключением в реальном времени",
+    kk: "KK / RU / EN көптілді интерфейс, нақты уақытта ауыстыру",
+    en: "Multilingual interface KK / RU / EN with real-time switching",
+  },
+  "docs.feat.history": {
+    ru: "История чатов с поиском и управлением сессиями",
+    kk: "Іздеу және сессияларды басқару бар чат тарихы",
+    en: "Chat history with search and session management",
+  },
+  "docs.feat.icd": {
+    ru: "Диагнозы с кодами МКБ-10 на основе 1000+ протоколов МЗ РК",
+    kk: "ҚР ДСМ 1000+ хаттамаларына негізделген МКБ-10 кодтарымен диагноздар",
+    en: "Diagnoses with ICD-10 codes based on 1000+ MoH RK protocols",
+  },
+  "docs.stack": {
+    ru: "ТЕХНОЛОГИЧЕСКИЙ СТЕК",
+    kk: "ТЕХНОЛОГИЯЛЫҚ СТЕК",
+    en: "TECH STACK",
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
