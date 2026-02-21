@@ -109,7 +109,7 @@ export default function HeroSection({ onStart }: Props) {
             />
             <div className="h-3 lg:h-4 w-px bg-white/40" />
             <span className="font-mono text-white text-sm lg:text-base font-bold tracking-wider">
-              MEDASSIST<span className="text-qaz-lime">.KZ</span>
+              FREAX<span className="text-qaz-lime">.LAB</span>
             </span>
           </div>
 

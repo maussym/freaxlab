@@ -66,7 +66,7 @@ export default function ChatWindow({
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-qaz-lime rounded-full animate-pulse" />
           <span className="font-mono text-white text-sm tracking-wider">
-            MEDASSIST<span className="text-qaz-lime">.KZ</span>
+            FREAX<span className="text-qaz-lime">.LAB</span>
           </span>
         </div>
         <div className="ml-auto flex items-center gap-4">
@@ -120,7 +120,7 @@ export default function ChatWindow({
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-1.5 h-1.5 bg-qaz-lime rounded-full" />
                       <span className="font-mono text-[10px] text-qaz-lime/60 tracking-wider">
-                        MEDASSIST AI
+                        FREAXLAB AI
                       </span>
                     </div>
 

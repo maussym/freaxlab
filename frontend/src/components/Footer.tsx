@@ -12,7 +12,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2 h-2 bg-qaz-lime rounded-full" />
               <span className="font-mono text-white text-sm font-bold tracking-wider">
-                MEDASSIST<span className="text-qaz-lime">.KZ</span>
+                FREAX<span className="text-qaz-lime">.LAB</span>
               </span>
             </div>
             <p className="font-mono text-xs text-white/40 leading-relaxed max-w-xs">
@@ -82,7 +82,7 @@ export default function Footer() {
               />
             </div>
             <span className="font-mono text-[10px] text-white/20">
-              &copy; 2026 MEDASSIST.KZ
+              &copy; 2026 FREAXLAB
             </span>
           </div>
         </div>

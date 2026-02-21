@@ -10,7 +10,7 @@ interface I18nContextValue {
 
 const I18nContext = createContext<I18nContextValue | null>(null);
 
-const STORAGE_KEY = "medassist-locale";
+const STORAGE_KEY = "freaxlab-locale";
 
 function getInitialLocale(): Locale {
   try {
