@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import qazLogo from "../assets/logo.webp";
 import { useI18n } from "../i18n/I18nContext";
+import { sectionShell } from "../lib/layout";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 interface Props {
@@ -100,7 +101,7 @@ export default function HeroSection({ onStart }: Props) {
 
       {/* Top header */}
       <div className="absolute top-0 left-0 right-0 z-20 border-b border-white/20">
-        <div className="container mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between">
+        <div className={`${sectionShell} py-3 lg:py-4 flex items-center justify-between`}>
           <div className="flex items-center gap-3 lg:gap-4">
             <img
               src={qazLogo}
@@ -132,7 +133,7 @@ export default function HeroSection({ onStart }: Props) {
 
       {/* Main content */}
       <div className="relative z-10 flex flex-1 items-center pt-16 lg:pt-0">
-        <div className="container mx-auto px-6 lg:px-16 lg:ml-[8%]">
+        <div className={sectionShell}>
           <div className="max-w-xl">
             {/* Top decorative line */}
             <div className="flex items-center gap-2 mb-3 opacity-60">
@@ -205,7 +206,7 @@ export default function HeroSection({ onStart }: Props) {
 
       {/* Bottom footer */}
       <div className="relative z-20 border-t border-white/20 bg-black/40 backdrop-blur-sm">
-        <div className="container mx-auto px-4 lg:px-8 py-2 lg:py-3 flex items-center justify-between">
+        <div className={`${sectionShell} py-2 lg:py-3 flex items-center justify-between`}>
           <div className="flex items-center gap-3 lg:gap-6 text-[8px] lg:text-[9px] font-mono text-white/50">
             <span>SYSTEM.READY</span>
             <div className="hidden lg:flex gap-1">

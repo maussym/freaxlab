@@ -1,5 +1,6 @@
 import { useInView } from "../hooks/useInView";
 import { useI18n } from "../i18n/I18nContext";
+import { sectionShell } from "../lib/layout";
 import type { TranslationKey } from "../i18n/translations";
 
 const icons = [
@@ -44,7 +45,7 @@ export default function HowItWorks() {
         backgroundSize: "60px 60px",
       }} />
 
-      <div className="relative container mx-auto px-6 lg:px-16">
+      <div className={`relative ${sectionShell}`}>
         {/* Section header */}
         <div className="flex items-center gap-3 mb-12 lg:mb-16">
           <div className="w-8 h-px bg-qaz-lime" />

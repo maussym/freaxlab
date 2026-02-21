@@ -1,5 +1,6 @@
 import { useInView } from "../hooks/useInView";
 import { useI18n } from "../i18n/I18nContext";
+import { sectionShell } from "../lib/layout";
 
 const partners = [
   { name: "QAZCODE", highlight: true, href: "https://qazcode.com" },
@@ -22,7 +23,7 @@ export default function Partners() {
 
   return (
     <section ref={ref} className="relative bg-black py-16 lg:py-24 overflow-hidden border-t border-white/5">
-      <div className="relative container mx-auto px-6 lg:px-16">
+      <div className={`relative ${sectionShell}`}>
         {/* Section header */}
         <div className="flex items-center gap-3 mb-10 lg:mb-14">
           <div className="w-8 h-px bg-qaz-lime" />
@@ -42,40 +43,42 @@ export default function Partners() {
       </div>
 
       {/* Scrolling ticker */}
-      <div
-        className={`relative transition-all duration-700 delay-200 ${
-          visible ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 lg:w-32 bg-linear-to-r from-black to-transparent z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 lg:w-32 bg-linear-to-l from-black to-transparent z-10" />
+      <div className={sectionShell}>
+        <div
+          className={`relative overflow-hidden transition-all duration-700 delay-200 ${
+            visible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 lg:w-32 bg-linear-to-r from-black to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 lg:w-32 bg-linear-to-l from-black to-transparent z-10" />
 
-        <div className="flex ticker-scroll">
-          {[...partners, ...partners].map((p, i) => (
-            <a
-              key={`${p.name}-${i}`}
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0 mx-4 lg:mx-8 flex items-center gap-3 group pointer-events-auto"
-            >
-              <div
-                className={`w-2 h-2 rounded-full ${
-                  p.highlight ? "bg-qaz-lime" : "bg-white/30"
-                }`}
-              />
-              <span
-                className={`font-mono text-lg lg:text-2xl font-bold tracking-wider whitespace-nowrap transition-colors ${
-                  p.highlight
-                    ? "text-qaz-lime/80 group-hover:text-qaz-lime"
-                    : "text-white/20 group-hover:text-white/40"
-                }`}
+          <div className="flex ticker-scroll">
+            {[...partners, ...partners].map((p, i) => (
+              <a
+                key={`${p.name}-${i}`}
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 mx-4 lg:mx-8 flex items-center gap-3 group pointer-events-auto"
               >
-                {p.name}
-              </span>
-            </a>
-          ))}
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    p.highlight ? "bg-qaz-lime" : "bg-white/30"
+                  }`}
+                />
+                <span
+                  className={`font-mono text-lg lg:text-2xl font-bold tracking-wider whitespace-nowrap transition-colors ${
+                    p.highlight
+                      ? "text-qaz-lime/80 group-hover:text-qaz-lime"
+                      : "text-white/20 group-hover:text-white/40"
+                  }`}
+                >
+                  {p.name}
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>

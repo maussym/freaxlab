@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useInView } from "../hooks/useInView";
 import { useI18n } from "../i18n/I18nContext";
+import { sectionShell } from "../lib/layout";
 
 interface CounterProps {
   end: number;
@@ -67,7 +68,7 @@ export default function AboutProject() {
       {/* Scanline overlay */}
       <div className="pointer-events-none absolute inset-0 scanlines opacity-[0.02]" />
 
-      <div className="relative container mx-auto px-6 lg:px-16">
+      <div className={`relative ${sectionShell}`}>
         {/* Section header */}
         <div className="flex items-center gap-3 mb-12 lg:mb-16">
           <div className="w-8 h-px bg-qaz-lime" />

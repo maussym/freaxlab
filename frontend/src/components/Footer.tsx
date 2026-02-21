@@ -1,11 +1,12 @@
 import { useI18n } from "../i18n/I18nContext";
+import { sectionShell } from "../lib/layout";
 
 export default function Footer() {
   const { t } = useI18n();
 
   return (
     <footer className="relative bg-black border-t border-white/10">
-      <div className="container mx-auto px-6 lg:px-16 py-10 lg:py-14">
+      <div className={`${sectionShell} py-10 lg:py-14`}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-10">
           {/* Brand */}
           <div>
