@@ -1,24 +1,16 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-# Рабочая директория
 WORKDIR /app
 
-# Оптимизация Python (без pyc и буферизации логов)
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-# Копируем зависимости
-COPY requirements.txt .
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev
 
-# Устанавливаем системные пакеты и Python-библиотеки
-RUN pip install --no-cache-dir -r requirements.txt
+COPY src/ ./src/
 
-# Копируем исходный код
-COPY . .
+ENV PYTHONUNBUFFERED=1
 
-# Открываем порт
-EXPOSE 8080
+EXPOSE 8000
 
-# COPY vector_db/ /app/vector_db/
-# Запускаем приложение через uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uv", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
