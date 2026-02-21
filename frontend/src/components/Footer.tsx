@@ -8,7 +8,6 @@ export default function Footer() {
     <footer className="relative bg-black border-t border-white/10">
       <div className={`${sectionShell} py-10 lg:py-14`}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-10">
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2 h-2 bg-qaz-lime rounded-full" />
@@ -21,7 +20,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Links */}
           <div>
             <h4 className="font-mono text-[10px] text-white/30 tracking-wider mb-4">
               {t("footer.links")}
@@ -47,7 +45,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Team */}
           <div>
             <h4 className="font-mono text-[10px] text-white/30 tracking-wider mb-4">
               {t("footer.team")}
@@ -61,10 +58,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-white/10 mb-6" />
 
-        {/* Bottom row */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="font-mono text-[10px] text-white/30 text-center md:text-left leading-relaxed max-w-lg">
             {t("footer.disclaimer")}

@@ -1,7 +1,6 @@
 export type Locale = "ru" | "kk" | "en";
 
 const translations = {
-  // ── Hero Section ──
   "hero.tagline": {
     ru: "КЛИНИЧЕСКАЯ ПОДДЕРЖКА РЕШЕНИЙ",
     kk: "КЛИНИКАЛЫҚ ШЕШІМДЕРДІ ҚОЛДАУ",
@@ -38,7 +37,6 @@ const translations = {
     en: "DOCUMENTATION",
   },
 
-  // ── How It Works ──
   "how.sectionTag": {
     ru: "КАК ЭТО РАБОТАЕТ",
     kk: "ҚАЛАЙ ЖҰМЫС ІСТЕЙДІ",
@@ -90,7 +88,6 @@ const translations = {
     en: "Results with ICD-10 codes, probability ranking and explanations",
   },
 
-  // ── About Project ──
   "about.sectionTag": {
     ru: "О ПРОЕКТЕ",
     kk: "ЖОБА ТУРАЛЫ",
@@ -132,7 +129,6 @@ const translations = {
     en: " sec",
   },
 
-  // ── Partners ──
   "partners.sectionTag": {
     ru: "ТЕХНОЛОГИИ",
     kk: "ТЕХНОЛОГИЯЛАР",
@@ -149,7 +145,6 @@ const translations = {
     en: "PARTNERS",
   },
 
-  // ── Footer ──
   "footer.description": {
     ru: "AI-система клинической диагностики на основе клинических протоколов Министерства Здравоохранения Республики Казахстан",
     kk: "Қазақстан Республикасы Денсаулық сақтау министрлігінің клиникалық хаттамаларына негізделген AI клиникалық диагностика жүйесі",
@@ -171,7 +166,6 @@ const translations = {
     en: "\u26A0 DISCLAIMER: This system does not replace consultation with a qualified physician. Results are for informational purposes only and do not constitute a medical conclusion.",
   },
 
-  // ── Chat ──
   "chat.back": {
     ru: "\u2190 НАЗАД",
     kk: "\u2190 АРТҚА",

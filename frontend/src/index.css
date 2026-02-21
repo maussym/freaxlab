@@ -5,7 +5,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    /* QazCode brand colors */
     --color-qaz-lime: #B6F600;
 
     --radius-sm: calc(var(--radius) - 4px);

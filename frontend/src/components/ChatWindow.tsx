@@ -11,7 +11,7 @@ export interface Message {
   text?: string;
   diagnoses?: DiagnosisItem[];
   loading?: boolean;
-  ts?: number; // timestamp
+  ts?: number;
 }
 
 interface Props {
@@ -21,7 +21,6 @@ interface Props {
   onBack: () => void;
 }
 
-/* ── Staged typing indicator ── */
 function TypingIndicator() {
   const { t } = useI18n();
   const stages = [
@@ -61,14 +60,12 @@ function TypingIndicator() {
   );
 }
 
-/* ── Time format ── */
 function formatTime(ts?: number) {
   if (!ts) return "";
   const d = new Date(ts);
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
-/* ── Welcome screen with examples ── */
 function WelcomeScreen({ onExample }: { onExample: (text: string) => void }) {
   const { t } = useI18n();
   const examples = [
@@ -79,7 +76,6 @@ function WelcomeScreen({ onExample }: { onExample: (text: string) => void }) {
 
   return (
     <div className="flex flex-col items-center justify-center py-12 lg:py-20 animate-fade-in">
-      {/* Heartbeat icon */}
       <div className="mb-6 opacity-40">
         <svg
           viewBox="0 0 120 40"
@@ -92,14 +88,12 @@ function WelcomeScreen({ onExample }: { onExample: (text: string) => void }) {
         </svg>
       </div>
 
-      {/* Welcome text */}
       <div className="max-w-md text-center mb-8">
         <p className="font-mono text-sm text-white/70 leading-relaxed">
           {t("chat.welcome")}
         </p>
       </div>
 
-      {/* Example prompts */}
       <p className="font-mono text-[10px] text-white/30 tracking-wider mb-4">
         {t("chat.welcomeHint")}
       </p>
@@ -121,7 +115,6 @@ function WelcomeScreen({ onExample }: { onExample: (text: string) => void }) {
   );
 }
 
-/* ── Main chat window ── */
 export default function ChatWindow({
   messages,
   loading,
@@ -137,7 +130,6 @@ export default function ChatWindow({
 
   return (
     <div className="flex flex-col h-screen bg-black">
-      {/* Header */}
       <div className="border-b border-white/10 bg-black/80 backdrop-blur-sm px-4 lg:px-6 py-3 flex items-center gap-4 z-10">
         <button
           onClick={onBack}
@@ -160,14 +152,12 @@ export default function ChatWindow({
         </div>
       </div>
 
-      {/* Disclaimer bar */}
       <div className="border-b border-white/5 bg-white/2 px-4 py-1.5 flex items-center justify-center">
         <span className="font-mono text-[9px] text-white/30 tracking-wide">
           {t("chat.disclaimer")}
         </span>
       </div>
 
-      {/* Messages area */}
       <div className="flex-1 overflow-y-auto px-4 lg:px-6 py-6">
         <div className="max-w-3xl mx-auto space-y-6">
           {messages.length === 0 ? (
@@ -231,7 +221,6 @@ export default function ChatWindow({
         </div>
       </div>
 
-      {/* Input */}
       <ChatInput onSend={onSend} disabled={loading} />
     </div>
   );

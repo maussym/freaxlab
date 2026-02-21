@@ -16,9 +16,7 @@ function getInitialLocale(): Locale {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === "ru" || saved === "kk" || saved === "en") return saved;
-  } catch {
-    // ignore
-  }
+  } catch {}
   return "ru";
 }
 
@@ -29,9 +27,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     setLocaleState(l);
     try {
       localStorage.setItem(STORAGE_KEY, l);
-    } catch {
-      // ignore
-    }
+    } catch {}
   }, []);
 
   const t = useCallback(

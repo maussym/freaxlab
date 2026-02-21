@@ -59,7 +59,6 @@ export default function HeroSection({ onStart }: Props) {
     `;
     document.head.appendChild(style);
 
-    // Branding cleanup — run a few times then stop (no infinite interval!)
     const hideBranding = () => {
       const projectDiv = document.querySelector("[data-us-project]");
       if (projectDiv) {
@@ -77,7 +76,6 @@ export default function HeroSection({ onStart }: Props) {
     const t3 = setTimeout(hideBranding, 3000);
     const t4 = setTimeout(hideBranding, 5000);
 
-    // Pause canvas when hero is out of viewport → saves GPU
     const section = sectionRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -85,11 +83,7 @@ export default function HeroSection({ onStart }: Props) {
           "[data-us-project] canvas"
         ) as HTMLCanvasElement | null;
         if (!canvas) return;
-        if (entry.isIntersecting) {
-          canvas.style.visibility = "visible";
-        } else {
-          canvas.style.visibility = "hidden";
-        }
+        canvas.style.visibility = entry.isIntersecting ? "visible" : "hidden";
       },
       { threshold: 0 }
     );
@@ -111,7 +105,6 @@ export default function HeroSection({ onStart }: Props) {
       ref={sectionRef}
       className="relative min-h-screen overflow-hidden bg-black flex flex-col"
     >
-      {/* UnicornStudio animation — desktop, GPU-promoted layer */}
       <div className="absolute inset-0 w-full h-full hidden lg:block will-change-transform">
         <div
           data-us-project="whwOGlfJ5Rz2rHaEUgHl"
@@ -119,27 +112,18 @@ export default function HeroSection({ onStart }: Props) {
         />
       </div>
 
-      {/* Mobile stars background */}
       <div className="absolute inset-0 w-full h-full lg:hidden stars-bg" />
-
-      {/* Scanline overlay */}
       <div className="pointer-events-none absolute inset-0 scanlines opacity-[0.03]" />
 
-      {/* Top header */}
       <div className="absolute top-0 left-0 right-0 z-20 border-b border-white/20">
         <div className={`${sectionShell} py-3 lg:py-4 flex items-center justify-between`}>
           <div className="flex items-center gap-3 lg:gap-4">
-            <img
-              src={qazLogo}
-              alt="QazCode"
-              className="h-5 lg:h-6 invert"
-            />
+            <img src={qazLogo} alt="QazCode" className="h-5 lg:h-6 invert" />
             <div className="h-3 lg:h-4 w-px bg-white/40" />
             <span className="font-mono text-white text-sm lg:text-base font-bold tracking-wider">
               FREAX<span className="text-qaz-lime">.LAB</span>
             </span>
           </div>
-
           <div className="flex items-center gap-4">
             <LanguageSwitcher />
             <div className="hidden lg:flex items-center gap-3 text-[10px] font-mono text-white/60">
@@ -151,17 +135,14 @@ export default function HeroSection({ onStart }: Props) {
         </div>
       </div>
 
-      {/* Corner accents */}
       <div className="absolute top-0 left-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-l-2 border-white/30 z-20" />
       <div className="absolute top-0 right-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-r-2 border-white/30 z-20" />
       <div className="absolute bottom-0 left-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/30 z-20" />
       <div className="absolute bottom-0 right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20" />
 
-      {/* Main content */}
       <div className="relative z-10 flex flex-1 items-center pt-16 lg:pt-0">
         <div className={sectionShell}>
           <div className="max-w-xl">
-            {/* Top decorative line */}
             <div className="flex items-center gap-2 mb-3 opacity-60">
               <div className="w-8 h-px bg-qaz-lime" />
               <span className="text-qaz-lime text-[10px] font-mono tracking-wider">
@@ -170,7 +151,6 @@ export default function HeroSection({ onStart }: Props) {
               <div className="flex-1 h-px bg-white/20" />
             </div>
 
-            {/* Title */}
             <div className="relative">
               <div className="hidden lg:block absolute -left-4 top-0 bottom-0 w-1 dither-pattern opacity-40" />
               <h1
@@ -178,31 +158,21 @@ export default function HeroSection({ onStart }: Props) {
                 style={{ letterSpacing: "0.08em" }}
               >
                 {t("hero.title1")}
-                <span className="block text-qaz-lime mt-1 lg:mt-2">
-                  {t("hero.title2")}
-                </span>
-                <span className="block text-white/80 mt-1 lg:mt-2 text-2xl lg:text-4xl">
-                  {t("hero.title3")}
-                </span>
+                <span className="block text-qaz-lime mt-1 lg:mt-2">{t("hero.title2")}</span>
+                <span className="block text-white/80 mt-1 lg:mt-2 text-2xl lg:text-4xl">{t("hero.title3")}</span>
               </h1>
             </div>
 
-            {/* Dots */}
             <div className="hidden lg:flex gap-1 mb-3 opacity-40">
               {Array.from({ length: 40 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-0.5 h-0.5 bg-qaz-lime rounded-full"
-                />
+                <div key={i} className="w-0.5 h-0.5 bg-qaz-lime rounded-full" />
               ))}
             </div>
 
-            {/* Description */}
             <p className="text-xs lg:text-base text-gray-300 mb-6 lg:mb-8 leading-relaxed font-mono opacity-80 max-w-md">
               {t("hero.description")}
             </p>
 
-            {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
               <button
                 onClick={onStart}
@@ -212,13 +182,11 @@ export default function HeroSection({ onStart }: Props) {
                 <span className="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-qaz-lime opacity-0 group-hover:opacity-100 transition-opacity" />
                 {t("hero.startBtn")}
               </button>
-
               <button className="px-6 lg:px-8 py-2.5 lg:py-3 border border-white/40 text-white font-mono text-xs lg:text-sm tracking-wider hover:bg-white/10 transition-all duration-200 cursor-pointer">
                 {t("hero.docsBtn")}
               </button>
             </div>
 
-            {/* Bottom notation */}
             <div className="hidden lg:flex items-center gap-2 mt-8 opacity-40">
               <span className="text-qaz-lime text-[9px] font-mono">+</span>
               <div className="flex-1 h-px bg-white/20" />
@@ -230,35 +198,23 @@ export default function HeroSection({ onStart }: Props) {
         </div>
       </div>
 
-      {/* Bottom footer — no backdrop-blur for perf */}
       <div className="relative z-20 border-t border-white/20 bg-black/70">
         <div className={`${sectionShell} py-2 lg:py-3 flex items-center justify-between`}>
           <div className="flex items-center gap-3 lg:gap-6 text-[8px] lg:text-[9px] font-mono text-white/50">
             <span>SYSTEM.READY</span>
             <div className="hidden lg:flex gap-1">
               {[14, 8, 12, 6, 16, 10, 7, 13].map((h, i) => (
-                <div
-                  key={i}
-                  className="w-1 bg-qaz-lime/40"
-                  style={{ height: `${h}px` }}
-                />
+                <div key={i} className="w-1 bg-qaz-lime/40" style={{ height: `${h}px` }} />
               ))}
             </div>
             <span>MKB-10</span>
           </div>
-
           <div className="flex items-center gap-2 lg:gap-4 text-[8px] lg:text-[9px] font-mono text-white/50">
             <span className="hidden lg:inline">TEAM &lt;FREAKS&gt;</span>
             <div className="flex gap-1">
               <div className="w-1 h-1 bg-qaz-lime/80 rounded-full animate-pulse" />
-              <div
-                className="w-1 h-1 bg-qaz-lime/50 rounded-full animate-pulse"
-                style={{ animationDelay: "0.2s" }}
-              />
-              <div
-                className="w-1 h-1 bg-qaz-lime/30 rounded-full animate-pulse"
-                style={{ animationDelay: "0.4s" }}
-              />
+              <div className="w-1 h-1 bg-qaz-lime/50 rounded-full animate-pulse" style={{ animationDelay: "0.2s" }} />
+              <div className="w-1 h-1 bg-qaz-lime/30 rounded-full animate-pulse" style={{ animationDelay: "0.4s" }} />
             </div>
           </div>
         </div>

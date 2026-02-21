@@ -48,7 +48,6 @@ export default function ChatInput({ onSend, disabled }: Props) {
                 target.style.height = target.scrollHeight + "px";
               }}
             />
-            {/* Character count when typing */}
             {text.length > 0 && (
               <span className="absolute right-3 bottom-3 font-mono text-[9px] text-white/15">
                 {text.length}

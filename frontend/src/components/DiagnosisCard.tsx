@@ -42,7 +42,6 @@ export default function DiagnosisCard({ item }: Props) {
       }`}
       onClick={() => setOpen((v) => !v)}
     >
-      {/* Header -- always visible */}
       <div className="flex items-center gap-3 p-4">
         <span className="font-mono text-qaz-lime text-lg font-bold">
           #{item.rank}
@@ -71,7 +70,6 @@ export default function DiagnosisCard({ item }: Props) {
         </svg>
       </div>
 
-      {/* Explanation -- expandable */}
       <div
         className={`overflow-hidden transition-all duration-200 ${
           open ? "max-h-40 opacity-100" : "max-h-0 opacity-0"

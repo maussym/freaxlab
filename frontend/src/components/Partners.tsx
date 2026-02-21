@@ -24,7 +24,6 @@ export default function Partners() {
   return (
     <section ref={ref} className="relative bg-black py-16 lg:py-24 overflow-hidden border-t border-white/5">
       <div className={`relative ${sectionShell}`}>
-        {/* Section header */}
         <div className="flex items-center gap-3 mb-10 lg:mb-14">
           <div className="w-8 h-px bg-qaz-lime" />
           <span className="font-mono text-qaz-lime text-[10px] tracking-wider">
@@ -42,14 +41,12 @@ export default function Partners() {
         </h2>
       </div>
 
-      {/* Scrolling ticker */}
       <div className={sectionShell}>
         <div
           className={`relative overflow-hidden transition-all duration-700 delay-200 ${
             visible ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* Fade edges */}
           <div className="absolute left-0 top-0 bottom-0 w-16 lg:w-32 bg-linear-to-r from-black to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-16 lg:w-32 bg-linear-to-l from-black to-transparent z-10" />
 

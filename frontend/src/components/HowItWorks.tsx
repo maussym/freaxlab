@@ -39,14 +39,12 @@ export default function HowItWorks() {
 
   return (
     <section ref={ref} className="relative bg-black py-20 lg:py-28 overflow-hidden">
-      {/* Grid background */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)",
         backgroundSize: "60px 60px",
       }} />
 
       <div className={`relative ${sectionShell}`}>
-        {/* Section header */}
         <div className="flex items-center gap-3 mb-12 lg:mb-16">
           <div className="w-8 h-px bg-qaz-lime" />
           <span className="font-mono text-qaz-lime text-[10px] tracking-wider">
@@ -62,7 +60,6 @@ export default function HowItWorks() {
           {t("how.subtitle")}
         </p>
 
-        {/* Steps */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {stepKeys.map((step, i) => (
             <div
@@ -74,11 +71,9 @@ export default function HowItWorks() {
               }`}
               style={{ transitionDelay: `${i * 150}ms` }}
             >
-              {/* Corner accent */}
               <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-qaz-lime/40 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-qaz-lime/40 rounded-br-lg opacity-0 group-hover:opacity-100 transition-opacity" />
 
-              {/* Step number */}
               <div className="flex items-center justify-between mb-6">
                 <span className="font-mono text-qaz-lime/30 text-4xl font-bold">
                   {step.num}
@@ -88,7 +83,6 @@ export default function HowItWorks() {
                 </div>
               </div>
 
-              {/* Divider */}
               <div className="w-full h-px bg-white/10 mb-4 group-hover:bg-qaz-lime/20 transition-colors" />
 
               <h3 className="font-mono text-sm font-bold text-white tracking-wider mb-3">
@@ -98,7 +92,6 @@ export default function HowItWorks() {
                 {t(step.desc)}
               </p>
 
-              {/* Connecting line */}
               {i < 2 && (
                 <div className="hidden md:block absolute top-1/2 -right-4 lg:-right-4 w-6 lg:w-8 h-px bg-white/10" />
               )}

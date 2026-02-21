@@ -60,16 +60,13 @@ export default function AboutProject() {
     { end: 5, suffix: t("about.stat3Suffix"), label: t("about.stat3") },
   ];
 
-  // Parse description with <accent> tags
   const descParts = t("about.description").split(/<accent>(.*?)<\/accent>/);
 
   return (
     <section ref={ref} className="relative bg-black py-20 lg:py-28 overflow-hidden">
-      {/* Scanline overlay */}
       <div className="pointer-events-none absolute inset-0 scanlines opacity-[0.02]" />
 
       <div className={`relative ${sectionShell}`}>
-        {/* Section header */}
         <div className="flex items-center gap-3 mb-12 lg:mb-16">
           <div className="w-8 h-px bg-qaz-lime" />
           <span className="font-mono text-qaz-lime text-[10px] tracking-wider">
@@ -101,7 +98,6 @@ export default function AboutProject() {
           </p>
         </div>
 
-        {/* Stats */}
         <div
           className={`grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 transition-all duration-700 delay-300 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -123,7 +119,6 @@ export default function AboutProject() {
           ))}
         </div>
 
-        {/* Decorative bottom bar */}
         <div className="flex items-center gap-2 mt-16 opacity-30">
           <div className="flex-1 h-px bg-white/20" />
           <div className="flex gap-1">
