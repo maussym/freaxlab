@@ -266,6 +266,56 @@ const translations = {
     kk: "Сәйкестік",
     en: "Confidence",
   },
+  "chat.voiceListening": {
+    ru: "Говорите...",
+    kk: "Сөйлеңіз...",
+    en: "Listening...",
+  },
+  "chat.voiceNotSupported": {
+    ru: "Голосовой ввод не поддерживается в этом браузере",
+    kk: "Дауыстық енгізу бұл браузерде қолдау көрсетілмейді",
+    en: "Voice input is not supported in this browser",
+  },
+  "chat.copied": {
+    ru: "Скопировано!",
+    kk: "Көшірілді!",
+    en: "Copied!",
+  },
+  "chat.copy": {
+    ru: "Копировать",
+    kk: "Көшіру",
+    en: "Copy",
+  },
+  "chat.chip.headache": {
+    ru: "Головная боль",
+    kk: "Бас ауруы",
+    en: "Headache",
+  },
+  "chat.chip.fever": {
+    ru: "Температура",
+    kk: "Температура",
+    en: "Fever",
+  },
+  "chat.chip.cough": {
+    ru: "Кашель",
+    kk: "Жөтел",
+    en: "Cough",
+  },
+  "chat.chip.stomachPain": {
+    ru: "Боль в животе",
+    kk: "Іш ауруы",
+    en: "Stomach pain",
+  },
+  "chat.chip.backPain": {
+    ru: "Боль в спине",
+    kk: "Арқа ауруы",
+    en: "Back pain",
+  },
+  "chat.chip.nausea": {
+    ru: "Тошнота",
+    kk: "Жүрек айну",
+    en: "Nausea",
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

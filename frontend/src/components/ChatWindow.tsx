@@ -205,8 +205,8 @@ export default function ChatWindow({
                               {msg.text}
                             </p>
                           )}
-                          {msg.diagnoses?.map((d) => (
-                            <DiagnosisCard key={d.rank} item={d} />
+                          {msg.diagnoses?.map((d, i) => (
+                            <DiagnosisCard key={d.rank} item={d} index={i} />
                           ))}
                         </div>
                       )}
@@ -221,7 +221,7 @@ export default function ChatWindow({
         </div>
       </div>
 
-      <ChatInput onSend={onSend} disabled={loading} />
+      <ChatInput onSend={onSend} disabled={loading} hasMessages={messages.length > 0} />
     </div>
   );
 }
