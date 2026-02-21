@@ -21,7 +21,7 @@ export default function App() {
   const { t } = useI18n();
 
   const handleSend = async (text: string) => {
-    const userMsg: Message = { id: nextId(), role: "user", text };
+    const userMsg: Message = { id: nextId(), role: "user", text, ts: Date.now() };
     const aiPlaceholder: Message = {
       id: nextId(),
       role: "ai",
@@ -39,6 +39,7 @@ export default function App() {
             ? {
                 ...m,
                 loading: false,
+                ts: Date.now(),
                 text: `${data.diagnoses.length} ${t("chat.foundDiagnoses")}`,
                 diagnoses: data.diagnoses,
               }
@@ -52,6 +53,7 @@ export default function App() {
             ? {
                 ...m,
                 loading: false,
+                ts: Date.now(),
                 text:
                   err instanceof Error
                     ? `${t("chat.error")}: ${err.message}`
@@ -67,11 +69,23 @@ export default function App() {
 
   return (
     <>
-      <div className={view === "hero" ? "" : "hidden"}>
+      <div
+        className={
+          view === "hero"
+            ? ""
+            : "fixed -top-[200vh] -left-[200vw] invisible pointer-events-none"
+        }
+      >
         <HeroSection onStart={() => setView("chat")} />
-        <HowItWorks />
-        <AboutProject />
-        <Partners />
+        <div className="section-lazy">
+          <HowItWorks />
+        </div>
+        <div className="section-lazy">
+          <AboutProject />
+        </div>
+        <div className="section-lazy">
+          <Partners />
+        </div>
         <Footer />
       </div>
       <div className={view === "chat" ? "" : "hidden"}>

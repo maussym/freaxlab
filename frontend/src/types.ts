@@ -3,6 +3,7 @@ export interface DiagnosisItem {
   diagnosis: string;
   icd10_code: string;
   explanation: string;
+  confidence?: number; 
 }
 
 export interface DiagnoseResponse {

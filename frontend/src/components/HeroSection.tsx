@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import qazLogo from "../assets/logo.webp";
 import { useI18n } from "../i18n/I18nContext";
 import { sectionShell } from "../lib/layout";
@@ -10,6 +10,7 @@ interface Props {
 
 export default function HeroSection({ onStart }: Props) {
   const { t } = useI18n();
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const embedScript = document.createElement("script");
@@ -58,6 +59,7 @@ export default function HeroSection({ onStart }: Props) {
     `;
     document.head.appendChild(style);
 
+    // Branding cleanup — run a few times then stop (no infinite interval!)
     const hideBranding = () => {
       const projectDiv = document.querySelector("[data-us-project]");
       if (projectDiv) {
@@ -70,23 +72,47 @@ export default function HeroSection({ onStart }: Props) {
       }
     };
 
-    hideBranding();
-    const interval = setInterval(hideBranding, 100);
-    setTimeout(hideBranding, 1000);
-    setTimeout(hideBranding, 3000);
-    setTimeout(hideBranding, 5000);
+    const t1 = setTimeout(hideBranding, 500);
+    const t2 = setTimeout(hideBranding, 1500);
+    const t3 = setTimeout(hideBranding, 3000);
+    const t4 = setTimeout(hideBranding, 5000);
+
+    // Pause canvas when hero is out of viewport → saves GPU
+    const section = sectionRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const canvas = document.querySelector(
+          "[data-us-project] canvas"
+        ) as HTMLCanvasElement | null;
+        if (!canvas) return;
+        if (entry.isIntersecting) {
+          canvas.style.visibility = "visible";
+        } else {
+          canvas.style.visibility = "hidden";
+        }
+      },
+      { threshold: 0 }
+    );
+    if (section) observer.observe(section);
 
     return () => {
-      clearInterval(interval);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+      observer.disconnect();
       document.head.removeChild(embedScript);
       document.head.removeChild(style);
     };
   }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-black flex flex-col">
-      {/* UnicornStudio animation — desktop */}
-      <div className="absolute inset-0 w-full h-full hidden lg:block">
+    <section
+      ref={sectionRef}
+      className="relative min-h-screen overflow-hidden bg-black flex flex-col"
+    >
+      {/* UnicornStudio animation — desktop, GPU-promoted layer */}
+      <div className="absolute inset-0 w-full h-full hidden lg:block will-change-transform">
         <div
           data-us-project="whwOGlfJ5Rz2rHaEUgHl"
           style={{ width: "100%", height: "100%", minHeight: "100vh" }}
@@ -204,8 +230,8 @@ export default function HeroSection({ onStart }: Props) {
         </div>
       </div>
 
-      {/* Bottom footer */}
-      <div className="relative z-20 border-t border-white/20 bg-black/40 backdrop-blur-sm">
+      {/* Bottom footer — no backdrop-blur for perf */}
+      <div className="relative z-20 border-t border-white/20 bg-black/70">
         <div className={`${sectionShell} py-2 lg:py-3 flex items-center justify-between`}>
           <div className="flex items-center gap-3 lg:gap-6 text-[8px] lg:text-[9px] font-mono text-white/50">
             <span>SYSTEM.READY</span>

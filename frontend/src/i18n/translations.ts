@@ -187,6 +187,31 @@ const translations = {
     kk: "Диагностиканы бастау үшін симптомдарды сипаттаңыз",
     en: "Describe symptoms to start diagnosis",
   },
+  "chat.welcome": {
+    ru: "Здравствуйте! Я \u2014 ассистент FREAX.LAB. Опишите симптомы пациента, и я проведу анализ по клиническим протоколам МЗ РК с кодами МКБ-10.",
+    kk: "С\u04D9леметсіз бе! Мен \u2014 FREAX.LAB к\u04E9мекшісімін. Нау\u049Bастың симптомдарын сипаттаңыз, мен \u049AР ДСМ клиникалы\u049B хаттамалары бойынша М\u049AБ-10 кодтарымен талдау ж\u04AFргіземін.",
+    en: "Hello! I'm the FREAX.LAB assistant. Describe the patient's symptoms and I'll analyze them against MoH RK clinical protocols with ICD-10 codes.",
+  },
+  "chat.welcomeHint": {
+    ru: "Или выберите один из примеров:",
+    kk: "Немесе мысалдардың бірін таңдаңыз:",
+    en: "Or pick an example:",
+  },
+  "chat.example1": {
+    ru: "Головная боль, температура 38.5, боль в горле, насморк",
+    kk: "Бас ауруы, температура 38.5, тамақ ауруы, мұрын ағу",
+    en: "Headache, fever 38.5, sore throat, runny nose",
+  },
+  "chat.example2": {
+    ru: "Боль в правом подреберье, тошнота, желтушность кожи",
+    kk: "Оң қабырға астындағы ауырсыну, жүрек айну, терінің сарғаюы",
+    en: "Pain in right hypochondrium, nausea, jaundice",
+  },
+  "chat.example3": {
+    ru: "Кашель более 2 недель, потеря веса, ночная потливость",
+    kk: "2 аптадан астам жөтел, салмақ жоғалту, түнгі терлеу",
+    en: "Cough for over 2 weeks, weight loss, night sweats",
+  },
   "chat.patient": {
     ru: "ПАЦИЕНТ",
     kk: "НАУҚАС",
@@ -196,6 +221,11 @@ const translations = {
     ru: "Опишите симптомы пациента...",
     kk: "Науқастың симптомдарын сипаттаңыз...",
     en: "Describe patient symptoms...",
+  },
+  "chat.shiftEnter": {
+    ru: "Shift+Enter \u2014 новая строка",
+    kk: "Shift+Enter \u2014 жаңа жол",
+    en: "Shift+Enter \u2014 new line",
   },
   "chat.send": {
     ru: "ОТПР.",
@@ -207,6 +237,26 @@ const translations = {
     kk: "ықтимал диагноз:",
     en: "possible diagnoses found:",
   },
+  "chat.analyzing": {
+    ru: "Анализирую симптомы...",
+    kk: "Симптомдарды талдап жатырмын...",
+    en: "Analyzing symptoms...",
+  },
+  "chat.matching": {
+    ru: "Сопоставляю с протоколами МЗ РК...",
+    kk: "ҚР ДСМ хаттамаларымен салыстырып жатырмын...",
+    en: "Matching against MoH RK protocols...",
+  },
+  "chat.generating": {
+    ru: "Формирую заключение...",
+    kk: "Қорытынды қалыптастырып жатырмын...",
+    en: "Generating conclusion...",
+  },
+  "chat.disclaimer": {
+    ru: "\u26A0 Результаты носят ознакомительный характер и не заменяют врача",
+    kk: "\u26A0 Нәтижелер танысу сипатында және дәрігерді алмастырмайды",
+    en: "\u26A0 Results are informational only and do not replace a doctor",
+  },
   "chat.error": {
     ru: "Ошибка",
     kk: "Қате",
@@ -216,6 +266,11 @@ const translations = {
     ru: "Произошла непредвиденная ошибка",
     kk: "Күтпеген қате орын алды",
     en: "An unexpected error occurred",
+  },
+  "chat.confidence": {
+    ru: "Совпадение",
+    kk: "Сәйкестік",
+    en: "Confidence",
   },
 } as const;
 

@@ -30,37 +30,51 @@ export default function ChatInput({ onSend, disabled }: Props) {
       onSubmit={handleSubmit}
       className="border-t border-white/10 bg-black/60 backdrop-blur-sm px-4 lg:px-6 py-3 lg:py-4"
     >
-      <div className="max-w-3xl mx-auto flex items-end gap-3">
-        <div className="flex-1 relative">
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={t("chat.placeholder")}
-            rows={1}
-            disabled={disabled}
-            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-sm text-white font-mono placeholder-white/30 resize-none focus:outline-none focus:border-qaz-lime/50 transition-colors disabled:opacity-40"
-            style={{ minHeight: "44px", maxHeight: "120px" }}
-            onInput={(e) => {
-              const target = e.target as HTMLTextAreaElement;
-              target.style.height = "44px";
-              target.style.height = target.scrollHeight + "px";
-            }}
-          />
+      <div className="max-w-3xl mx-auto">
+        <div className="flex items-start gap-3">
+          <div className="flex-1 relative">
+            <textarea
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={t("chat.placeholder")}
+              rows={1}
+              disabled={disabled}
+              className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-3 pr-12 text-sm text-white font-mono placeholder-white/30 resize-none focus:outline-none focus:border-qaz-lime/50 transition-colors disabled:opacity-40"
+              style={{ minHeight: "44px", maxHeight: "120px" }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = "44px";
+                target.style.height = target.scrollHeight + "px";
+              }}
+            />
+            {/* Character count when typing */}
+            {text.length > 0 && (
+              <span className="absolute right-3 bottom-3 font-mono text-[9px] text-white/15">
+                {text.length}
+              </span>
+            )}
+          </div>
+          <button
+            type="submit"
+            disabled={disabled || !text.trim()}
+            className="flex items-center justify-center bg-qaz-lime text-black font-mono text-xs font-bold tracking-wider hover:bg-qaz-lime disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer rounded-lg shrink-0"
+            style={{ width: "44px", height: "44px" }}
+          >
+            {disabled ? (
+              <span className="w-4 h-4 border-2 border-black/40 border-t-black rounded-full animate-spin block" />
+            ) : (
+              <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                <path d="M3.105 2.289a.75.75 0 00-.826.95l1.414 4.925A1.5 1.5 0 005.135 9.25h6.115a.75.75 0 010 1.5H5.135a1.5 1.5 0 00-1.442 1.086l-1.414 4.926a.75.75 0 00.826.95 28.896 28.896 0 0015.293-7.154.75.75 0 000-1.115A28.897 28.897 0 003.105 2.289z" />
+              </svg>
+            )}
+          </button>
         </div>
-        <button
-          type="submit"
-          disabled={disabled || !text.trim()}
-          className="px-4 py-3 bg-qaz-lime text-black font-mono text-xs font-bold tracking-wider hover:bg-qaz-lime disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer rounded-lg"
-        >
-          {disabled ? (
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 border-2 border-black/40 border-t-black rounded-full animate-spin" />
-            </span>
-          ) : (
-            t("chat.send")
-          )}
-        </button>
+        <div className="flex items-center justify-between mt-1.5 px-1">
+          <span className="font-mono text-[9px] text-white/15">
+            {t("chat.shiftEnter")}
+          </span>
+        </div>
       </div>
     </form>
   );
