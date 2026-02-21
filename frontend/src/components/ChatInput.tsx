@@ -47,6 +47,7 @@ export default function ChatInput({ onSend, disabled, hasMessages }: Props) {
   const [voiceError, setVoiceError] = useState(false);
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const baseTextRef = useRef("");
 
   function createRecognition() {
     if (!SpeechRecognitionAPI) return null;
@@ -90,6 +91,7 @@ export default function ChatInput({ onSend, disabled, hasMessages }: Props) {
     if (!recognition) return;
 
     recognitionRef.current = recognition;
+    baseTextRef.current = text;
     let finalTranscript = "";
 
     recognition.onresult = (event) => {
@@ -102,21 +104,14 @@ export default function ChatInput({ onSend, disabled, hasMessages }: Props) {
           interim = transcript;
         }
       }
-      setText((prev) => {
-        const base = prev.endsWith(" ") || prev === "" ? prev : prev + " ";
-        return base + finalTranscript + interim;
-      });
+      const base = baseTextRef.current;
+      const separator = base && !base.endsWith(" ") ? " " : "";
+      setText(base + separator + finalTranscript + interim);
     };
 
     recognition.onend = () => {
       setListening(false);
       recognitionRef.current = null;
-      if (finalTranscript) {
-        setText((prev) => {
-          const base = prev.replace(/\s+$/, "");
-          return base;
-        });
-      }
     };
 
     recognition.onerror = () => {
