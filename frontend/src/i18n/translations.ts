@@ -316,6 +316,36 @@ const translations = {
     kk: "Жүрек айну",
     en: "Nausea",
   },
+  "sidebar.newChat": {
+    ru: "НОВЫЙ ЧАТ",
+    kk: "ЖАҢА ЧАТ",
+    en: "NEW CHAT",
+  },
+  "sidebar.search": {
+    ru: "Поиск по истории...",
+    kk: "Тарихтан іздеу...",
+    en: "Search history...",
+  },
+  "sidebar.noResults": {
+    ru: "Ничего не найдено",
+    kk: "Ештеңе табылмады",
+    en: "No results found",
+  },
+  "sidebar.empty": {
+    ru: "Нет сохранённых сессий",
+    kk: "Сақталған сессиялар жоқ",
+    en: "No saved sessions",
+  },
+  "sidebar.untitled": {
+    ru: "Новая сессия",
+    kk: "Жаңа сессия",
+    en: "New session",
+  },
+  "sidebar.storedLocally": {
+    ru: "История хранится локально",
+    kk: "Тарих жергілікті сақталады",
+    en: "History stored locally",
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
