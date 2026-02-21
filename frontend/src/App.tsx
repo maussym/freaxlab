@@ -1,27 +1,64 @@
 import { useState } from "react";
-import SymptomForm from "./components/SymptomForm";
-import DiagnosisResults from "./components/DiagnosisResults";
-import ErrorMessage from "./components/ErrorMessage";
+import HeroSection from "./components/HeroSection";
+import HowItWorks from "./components/HowItWorks";
+import AboutProject from "./components/AboutProject";
+import Partners from "./components/Partners";
+import Footer from "./components/Footer";
+import ChatWindow, { type Message } from "./components/ChatWindow";
 import { fetchDiagnosis } from "./api";
-import type { DiagnosisItem } from "./types";
+import { useI18n } from "./i18n/I18nContext";
 import "./App.css";
 
-export default function App() {
-  const [diagnoses, setDiagnoses] = useState<DiagnosisItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+type View = "hero" | "chat";
 
-  const handleSubmit = async (symptoms: string) => {
+let msgId = 0;
+const nextId = () => String(++msgId);
+
+export default function App() {
+  const [view, setView] = useState<View>("hero");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
+  const { t } = useI18n();
+
+  const handleSend = async (text: string) => {
+    const userMsg: Message = { id: nextId(), role: "user", text };
+    const aiPlaceholder: Message = {
+      id: nextId(),
+      role: "ai",
+      loading: true,
+    };
+
+    setMessages((prev) => [...prev, userMsg, aiPlaceholder]);
     setLoading(true);
-    setError(null);
-    setDiagnoses([]);
 
     try {
-      const data = await fetchDiagnosis({ symptoms });
-      setDiagnoses(data.diagnoses);
+      const data = await fetchDiagnosis({ symptoms: text });
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === aiPlaceholder.id
+            ? {
+                ...m,
+                loading: false,
+                text: `${data.diagnoses.length} ${t("chat.foundDiagnoses")}`,
+                diagnoses: data.diagnoses,
+              }
+            : m
+        )
+      );
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Произошла непредвиденная ошибка"
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === aiPlaceholder.id
+            ? {
+                ...m,
+                loading: false,
+                text:
+                  err instanceof Error
+                    ? `${t("chat.error")}: ${err.message}`
+                    : t("chat.unknownError"),
+              }
+            : m
+        )
       );
     } finally {
       setLoading(false);
@@ -29,29 +66,22 @@ export default function App() {
   };
 
   return (
-    <div className="app">
-      <header>
-        <h1>MedAssist KZ</h1>
-        <p className="subtitle">
-          Клиническая система поддержки принятия решений
-        </p>
-      </header>
-
-      <main>
-        <SymptomForm onSubmit={handleSubmit} loading={loading} />
-        {error && <ErrorMessage message={error} />}
-        <DiagnosisResults diagnoses={diagnoses} />
-      </main>
-
-      <footer>
-        <p>
-          Datasaur 2026 &middot; Qazcode Challenge &middot; Команда &lt;freaks&gt;
-        </p>
-        <p className="disclaimer">
-          Система предназначена для информационной поддержки и не заменяет
-          консультацию врача.
-        </p>
-      </footer>
-    </div>
+    <>
+      <div className={view === "hero" ? "" : "hidden"}>
+        <HeroSection onStart={() => setView("chat")} />
+        <HowItWorks />
+        <AboutProject />
+        <Partners />
+        <Footer />
+      </div>
+      <div className={view === "chat" ? "" : "hidden"}>
+        <ChatWindow
+          messages={messages}
+          loading={loading}
+          onSend={handleSend}
+          onBack={() => setView("hero")}
+        />
+      </div>
+    </>
   );
 }
