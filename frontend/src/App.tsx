@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import SymptomForm from "./components/SymptomForm";
+import DiagnosisResults from "./components/DiagnosisResults";
+import ErrorMessage from "./components/ErrorMessage";
+import { fetchDiagnosis } from "./api";
+import type { DiagnosisItem } from "./types";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [diagnoses, setDiagnoses] = useState<DiagnosisItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (symptoms: string) => {
+    setLoading(true);
+    setError(null);
+    setDiagnoses([]);
+
+    try {
+      const data = await fetchDiagnosis({ symptoms });
+      setDiagnoses(data.diagnoses);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Произошла непредвиденная ошибка"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+    <div className="app">
+      <header>
+        <h1>MedAssist KZ</h1>
+        <p className="subtitle">
+          Клиническая система поддержки принятия решений
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      </header>
 
-export default App
+      <main>
+        <SymptomForm onSubmit={handleSubmit} loading={loading} />
+        {error && <ErrorMessage message={error} />}
+        <DiagnosisResults diagnoses={diagnoses} />
+      </main>
+
+      <footer>
+        <p>
+          Datasaur 2026 &middot; Qazcode Challenge &middot; Команда &lt;freaks&gt;
+        </p>
+        <p className="disclaimer">
+          Система предназначена для информационной поддержки и не заменяет
+          консультацию врача.
+        </p>
+      </footer>
+    </div>
+  );
+}
