@@ -31,16 +31,6 @@ export default function App() {
 
   const messages = activeSession?.messages ?? [];
 
-  const setMessages = useCallback(
-    (updater: Message[] | ((prev: Message[]) => Message[])) => {
-      if (!activeId) return;
-      const next =
-        typeof updater === "function" ? updater(messages) : updater;
-      updateMessages(activeId, next);
-    },
-    [activeId, messages, updateMessages]
-  );
-
   const handleStartChat = useCallback(() => {
     createSession();
     setView("chat");
