@@ -10,3 +10,8 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+API_KEY = settings.QAZCODE_API_KEY
+HUB_URL = "https://hub.qazcode.ai"
+EMBEDDING_MODEL = "intfloat/multilingual-e5-base"
+MODEL = "oss-120b"

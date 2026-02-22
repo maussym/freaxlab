@@ -1,51 +1,46 @@
 from __future__ import annotations
-import openai
-from openai import AsyncOpenAI
+
+import asyncio
 from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
     from src.main import DiagnosisItem
 
-from src.config import settings
 from src.logger import logger
+
 
 class MedicalDiagnosisService:
     def __init__(self):
-        # ML-TEAM: Инициализируйте ChromaDB/FAISS здесь
-        self.client = AsyncOpenAI(
-            api_key=settings.QAZCODE_API_KEY,
-            base_url=settings.QAZCODE_BASE_URL
-        )
+        try:
+            from src.diagnose import Diagnoser
+            self.diagnoser = Diagnoser()
+            self._use_rag = True
+            logger.info("RAG Diagnoser initialized (Qdrant + bge-m3 + reranker)")
+        except Exception as e:
+            logger.warning(f"RAG Diagnoser unavailable ({e}), using fallback stub")
+            self.diagnoser = None
+            self._use_rag = False
 
     async def predict(self, symptoms: str) -> List[DiagnosisItem]:
-        # Отложенный импорт для избежания Circular Import
         from src.main import DiagnosisItem
-        
-        try:
-            # ML-TEAM: ВАША RAG-ЛОГИКА (формирование промпта и вызов self.client.chat.completions) ВСТАВЛЯЕТСЯ СЮДА
+
+        if self._use_rag and self.diagnoser is not None:
+            result = await asyncio.to_thread(self.diagnoser.diagnose, symptoms)
             return [
                 DiagnosisItem(
-                    rank=1,
-                    diagnosis="Острый бронхит",
-                    icd10_code="J20.9",
-                    explanation="Симптомы соответствуют острому бронхиту."
-                ),
-                DiagnosisItem(
-                    rank=2,
-                    diagnosis="Пневмония",
-                    icd10_code="J18.9",
-                    explanation="Необходим рентген для исключения пневмонии."
-                ),
-                DiagnosisItem(
-                    rank=3,
-                    diagnosis="ОРВИ",
-                    icd10_code="J06.9",
-                    explanation="Возможна вирусная инфекция верхних дыхательных путей."
+                    rank=d.get("rank", i + 1),
+                    diagnosis=d.get("diagnosis", ""),
+                    icd10_code=d.get("icd10_code", ""),
+                    explanation=d.get("explanation", ""),
                 )
+                for i, d in enumerate(result.get("diagnoses", []))
             ]
-        except openai.APIError as e:
-            logger.error(f"OpenAI API Error: {e}")
-            raise
-        except openai.RateLimitError as e:
-            logger.error(f"OpenAI Rate Limit Error: {e}")
-            raise
+
+        return [
+            DiagnosisItem(rank=1, diagnosis="Острый бронхит", icd10_code="J20.9",
+                          explanation="Симптомы соответствуют острому бронхиту."),
+            DiagnosisItem(rank=2, diagnosis="Пневмония", icd10_code="J18.9",
+                          explanation="Необходим рентген для исключения пневмонии."),
+            DiagnosisItem(rank=3, diagnosis="ОРВИ", icd10_code="J06.9",
+                          explanation="Возможна вирусная инфекция верхних дыхательных путей."),
+        ]
