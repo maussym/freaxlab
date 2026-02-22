@@ -1,190 +1,105 @@
-# FREAX.LAB
+# FREAX.LAB (MedAssist.KZ)
 
-AI-система клинической диагностики на основе клинических протоколов Министерства Здравоохранения Республики Казахстан.
+AI-система клинической диагностики на основе **10 308 клинических протоколов** Министерства Здравоохранения РК.
 
 **Datasaur 2026 | QazCode Challenge**
 
+> **Production:** [freaxlab.up.railway.app](https://freaxlab.up.railway.app)
+
 ---
 
-## Что делает
+## Как работает
 
-Пользователь вводит симптомы пациента в свободной форме — система возвращает:
-- Top-N вероятных диагнозов, ранжированных по вероятности
-- Коды МКБ-10 для каждого диагноза
-- Клинические пояснения на основе протоколов МЗ РК
+1. Пользователь вводит симптомы (текст или голос)
+2. RAG-пайплайн ищет релевантные протоколы МЗ РК в векторной БД (10 308 документов)
+3. LLM (GPT-OSS через QazCode Hub) анализирует симптомы + протоколы
+4. Возвращает **Top-3 диагноза** с кодами МКБ-10 и пояснениями
+
+## Ключевые фичи
+
+| Фича | Описание |
+|------|----------|
+| RAG-диагностика | Qdrant Cloud + bge-m3 embeddings + CrossEncoder reranker + LLM |
+| Мультиязычность | Казахский / Русский / Английский |
+| Голосовой ввод | Web Speech API (KK, RU, EN) |
+| Карта тела | Интерактивный body map для выбора области боли |
+| История чатов | Сохранение и поиск по сессиям |
+| Экспорт PDF | Выгрузка диагноза в PDF |
+| Авторизация | JWT-аутентификация |
+
+---
 
 ## Стек
 
-### Frontend
-- **React 19** + TypeScript
-- **Vite 7** (сборка)
-- **Tailwind CSS v4**
-- **UnicornStudio** (WebGL-анимация на лендинге)
-- **Web Speech API** (голосовой ввод)
-
-### Backend
-- **FastAPI** + Uvicorn
-- **OpenAI SDK** (GPT-OSS через QazCode Hub)
-- **pydantic-settings** (конфигурация)
-
-### Деплой
-- **Docker** (multi-stage: Node + Python в одном образе)
-- **Vercel** (фронтенд) / **Render** (бекенд) — опционально
-
----
-
-## Возможности
-
-- Мультиязычный интерфейс (KK / RU / EN)
-- Голосовой ввод симптомов (русский, казахский, английский)
-- Quick-чипы для быстрого ввода симптомов
-- Карточки диагнозов с confidence bar и аккордеоном
-- Кнопка копирования диагноза
-- История чатов с поиском (localStorage)
-- Адаптивный сайдбар (desktop + mobile hamburger)
-- Лендинг с секциями: Hero, How It Works, About, Partners, Footer
-- Оптимизированные анимации (IntersectionObserver, content-visibility)
+| Слой | Технологии |
+|------|-----------|
+| Frontend | React 19, TypeScript, Vite 7, Tailwind CSS v4, UnicornStudio (WebGL) |
+| Backend | FastAPI, Uvicorn, OpenAI SDK, JWT, SQLite |
+| ML/RAG | Qdrant Cloud, sentence-transformers (bge-m3), CrossEncoder reranker, GPT-OSS (QazCode Hub) |
+| Deploy | Docker (multi-stage), Railway (production), docker-compose (local full stack) |
 
 ---
 
 ## Быстрый старт
 
+### Docker Compose (полный стек с RAG)
+
+```bash
+docker compose up --build
+```
+Открыть http://localhost:8080
+
 ### Локальная разработка
 
-**Backend:**
 ```bash
-cd backend
-uv sync
-cp .env.example .env  # добавить QAZCODE_API_KEY
+# Backend
+cd backend && uv sync && cp .env.example .env
 uv run uvicorn src.main:app --host 127.0.0.1 --port 8080
+
+# Frontend
+cd frontend && npm install && npm run dev
 ```
-
-**Frontend:**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Открыть http://localhost:5173 — Vite проксирует `/diagnose` на `localhost:8080`.
-
-### Docker (полная сборка)
-
-```bash
-docker build -t freaxlab .
-docker run -p 8000:8000 -e QAZCODE_API_KEY=your_key freaxlab
-```
-
-Открыть http://localhost:8000.
+Открыть http://localhost:5173
 
 ---
 
-## Структура проекта
+## API эндпоинты
 
-```
-datasaur_freaks/
-├── frontend/                 # React SPA
-│   ├── src/
-│   │   ├── components/       # UI-компоненты
-│   │   │   ├── HeroSection   # Лендинг + UnicornStudio canvas
-│   │   │   ├── ChatWindow    # Окно чата с сообщениями
-│   │   │   ├── ChatInput     # Ввод + голос + чипы
-│   │   │   ├── ChatSidebar   # Сайдбар с историей сессий
-│   │   │   ├── DiagnosisCard # Карточка диагноза
-│   │   │   ├── HowItWorks    # Секция "Как это работает"
-│   │   │   ├── AboutProject  # Секция "О проекте"
-│   │   │   ├── Partners      # Технологии и партнёры
-│   │   │   ├── Footer        # Подвал
-│   │   │   └── LanguageSwitcher
-│   │   ├── hooks/            # useSessions, useInView
-│   │   ├── i18n/             # Переводы (KK/RU/EN)
-│   │   ├── api.ts            # HTTP-клиент
-│   │   ├── types.ts          # TypeScript-типы
-│   │   └── App.tsx           # Роутинг hero ↔ chat
-│   ├── vite.config.ts
-│   └── package.json
-├── backend/                  # FastAPI сервер
-│   ├── src/
-│   │   ├── main.py           # Эндпоинты + раздача SPA
-│   │   ├── config.py         # Настройки из .env
-│   │   ├── logger.py         # Логирование
-│   │   └── services/
-│   │       └── ml_service.py # RAG-диагностика (GPT-OSS)
-│   ├── data/                 # Тестовые данные
-│   ├── notebooks/            # Jupyter-примеры
-│   ├── Dockerfile            # Backend-only образ
-│   └── pyproject.toml
-├── Dockerfile                # Production multi-stage
-├── vercel.json               # Vercel-деплой фронтенда
-└── .dockerignore
-```
+| Метод | Путь | Описание |
+|-------|------|----------|
+| POST | `/diagnose` | Диагностика по симптомам |
+| POST | `/api/auth/register` | Регистрация |
+| POST | `/api/auth/login` | Авторизация (JWT) |
+| POST | `/api/chat` | Отправка сообщения в чат |
+| GET | `/api/history` | История диагнозов |
+| GET | `/api/export/pdf/{id}` | Экспорт в PDF |
+| POST | `/api/body-map` | Диагностика по области тела |
+| GET | `/health` | Healthcheck |
 
----
-
-## API
-
-### POST /diagnose
-
-Основной эндпоинт диагностики.
-
-**Request:**
-```json
-{
-  "symptoms": "Головная боль, температура 38.5, боль в горле"
-}
-```
-
-**Response:**
-```json
-{
-  "diagnoses": [
-    {
-      "rank": 1,
-      "diagnosis": "Острый бронхит",
-      "icd10_code": "J20.9",
-      "explanation": "Симптомы соответствуют острому бронхиту."
-    }
-  ]
-}
-```
-
-### GET /health
-
-Healthcheck. Возвращает `{"status": "ok"}`.
-
----
-
-## Переменные окружения
-
-| Переменная | Описание | Где |
-|------------|----------|-----|
-| `QAZCODE_API_KEY` | API-ключ QazCode Hub (GPT-OSS) | Backend `.env` |
-| `QAZCODE_BASE_URL` | URL API (по умолчанию `https://hub.qazcode.ai/v1`) | Backend `.env` |
-| `VITE_API_BASE` | URL бекенда для фронтенда (пустой = same-origin) | Vercel env |
-
----
-
-## Деплой
-
-### Docker (Railway / Render / VPS)
-
-Корневой `Dockerfile` собирает всё в один образ:
-1. Stage 1: `node:20-slim` — билд фронтенда
-2. Stage 2: `python:3.12-slim` — бекенд + статика
+### Пример запроса
 
 ```bash
-docker build -t freaxlab .
-docker run -p 8000:8000 -e QAZCODE_API_KEY=... freaxlab
+curl -X POST https://freaxlab.up.railway.app/diagnose \
+  -H "Content-Type: application/json" \
+  -d '{"symptoms": "Головная боль, температура 38.5, боль в горле"}'
 ```
 
-### Vercel + Render (раздельно)
+---
 
-**Frontend (Vercel):** `vercel.json` уже настроен. Добавить `VITE_API_BASE` в Environment Variables.
+## Архитектура RAG-пайплайна
 
-**Backend (Render):** New Web Service → Root Directory: `backend` → Runtime: Docker.
+```
+Симптомы → bge-m3 (embeddings) → Qdrant Cloud (10 308 протоколов)
+                                         ↓
+                                  Top-20 документов
+                                         ↓
+                              CrossEncoder reranker → Top-5
+                                         ↓
+                              LLM (GPT-OSS) → Диагнозы + МКБ-10
+```
 
 ---
 
 ## Команда
 
-**freaks** — Datasaur 2026 | QazCode Challenge
+**FREAKS** — Datasaur 2026 | QazCode Challenge
