@@ -23,7 +23,7 @@ from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 from sentence_transformers import CrossEncoder
 
-from src.config import API_KEY, HUB_URL, MODEL
+from src.config import API_KEY, HUB_URL, MODEL, settings
 
 # ─── Конфигурация ────────────────────────────────────────────────────────────
 
@@ -33,7 +33,8 @@ VECTOR_SIZE     = 1024
 TOP_K           = 5   # сколько чанков тянуть из Qdrant
 TOP_N_DIAGNOSES = 3        # сколько диагнозов возвращать
 
-QDRANT_URL  = "http://localhost:6333"
+QDRANT_URL  = settings.QDRANT_URL
+QDRANT_API_KEY = settings.QDRANT_API_KEY
 
 # ─── Промпт ──────────────────────────────────────────────────────────────────
 
@@ -99,7 +100,7 @@ class Diagnoser:
         self.embed_model = SentenceTransformer(EMBEDDING_MODEL, device=self.device)
 
         print(f"Подключение к Qdrant: {QDRANT_URL}")
-        self.qdrant = QdrantClient(url=QDRANT_URL)
+        self.qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY or None)
 
         print(f"Подключение к ЛЛМ: {HUB_URL}")
         self.llm = OpenAI(base_url=HUB_URL, api_key=API_KEY)

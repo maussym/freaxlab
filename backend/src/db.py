@@ -350,6 +350,7 @@ def main():
     parser = argparse.ArgumentParser(description="Загрузка медпротоколов в Qdrant (bge-m3 + MPS)")
     parser.add_argument("--input",       required=True,           help="Путь к .jsonl файлу")
     parser.add_argument("--url",         default=QDRANT_URL,      help="URL Qdrant сервера")
+    parser.add_argument("--api-key",     default=None,            help="API ключ Qdrant Cloud")
     parser.add_argument("--cache",       default=CACHE_FILE,      help="Путь к кэшу эмбеддингов")
     parser.add_argument("--query",       default=None,            help="Тестовый запрос после загрузки")
     parser.add_argument("--encode-only", action="store_true",     help="Только эмбеддинги, без Qdrant")
@@ -379,7 +380,7 @@ def main():
         return
 
     print(f"\nПодключение к Qdrant: {args.url}")
-    qdrant_client = QdrantClient(url=args.url)
+    qdrant_client = QdrantClient(url=args.url, api_key=args.api_key or None)
     create_collection(qdrant_client)
     upload_from_cache(qdrant_client, args.cache)
     print(f"\n✅ Готово! Коллекция: {COLLECTION_NAME}")
