@@ -19,6 +19,8 @@ RUN uv sync --frozen --no-dev
 COPY backend/src/ ./src/
 COPY --from=frontend /build/dist ./static/
 
+RUN mkdir -p /app/data
+
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
 

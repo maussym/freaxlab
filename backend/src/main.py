@@ -2,13 +2,17 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from src.config import settings
+from src.database import init_db
 from src.logger import logger
 from src.services.ml_service import MedicalDiagnosisService
+
+from src.api.endpoints import auth, chat, history, export, body_map
 
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 
@@ -26,13 +30,29 @@ class DiagnoseResponse(BaseModel):
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # ML-TEAM: ИНИЦИАЛИЗАЦИЯ ВЕКТОРНОЙ БАЗЫ И ПРОМПТОВ ЗДЕСЬ (выполняется 1 раз при старте)
+    logger.info("Server startup: Initializing database...")
+    await init_db()
+    logger.info("Database initialized.")
     logger.info("Server startup: Initializing services...")
     app.state.ml_service = MedicalDiagnosisService()
     logger.info("MedicalDiagnosisService initialized successfully.")
     yield
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(auth.router)
+app.include_router(chat.router)
+app.include_router(history.router)
+app.include_router(export.router)
+app.include_router(body_map.router)
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
