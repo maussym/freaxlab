@@ -1,9 +1,4 @@
-from pydantic_settings import BaseSettings
-
-class Settings(BaseSettings):
-    QAZCODE_API_KEY: str = ""
-    QAZCODE_BASE_URL: str = "https://hub.qazcode.ai/v1"
-
-    model_config = {"env_file": ".env"}
-
-settings = Settings()
+API_KEY = "sk-BDVloWBwHCr5oltlXwyhtA"
+HUB_URL = "https://hub.qazcode.ai"
+EMBEDDING_MODEL = "intfloat/multilingual-e5-base"
+MODEL = "oss-120b"
