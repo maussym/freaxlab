@@ -64,6 +64,7 @@ db.sqlite3-journal
 data/app.db
 data/app.db-wal
 data/app.db-shm
+points_cache.jsonl
 
 # Flask stuff:
 instance/

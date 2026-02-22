@@ -25,6 +25,7 @@ services:
       - PORT=8000
     volumes:
       - app_data:/app/data
+      - ./backend/points_cache.jsonl:/app/points_cache.jsonl:ro
     depends_on:
       qdrant:
         condition: service_healthy
