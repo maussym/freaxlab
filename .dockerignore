@@ -3,6 +3,10 @@ frontend/dist
 backend/__pycache__
 backend/.venv
 backend/static
+backend/data
+backend/notebooks
 **/.git
 **/.DS_Store
 **/*.pyc
+**/.env
+*.md
