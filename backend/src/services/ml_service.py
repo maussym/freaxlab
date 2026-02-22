@@ -11,15 +11,28 @@ from src.logger import logger
 
 class MedicalDiagnosisService:
     def __init__(self):
+        # Try heavy RAG (torch + local models) first
         try:
             from src.diagnose import Diagnoser
             self.diagnoser = Diagnoser()
             self._use_rag = True
             logger.info("RAG Diagnoser initialized (Qdrant + bge-m3 + reranker)")
+            return
         except Exception as e:
-            logger.warning(f"RAG Diagnoser unavailable ({e}), using fallback stub")
-            self.diagnoser = None
-            self._use_rag = False
+            logger.warning(f"Heavy RAG unavailable ({e}), trying light version...")
+
+        # Fallback: light RAG (HF Inference API, no torch)
+        try:
+            from src.diagnose_light import DiagnoserLight
+            self.diagnoser = DiagnoserLight()
+            self._use_rag = True
+            logger.info("Light RAG Diagnoser initialized (HF API + Qdrant Cloud)")
+            return
+        except Exception as e:
+            logger.warning(f"Light RAG also unavailable ({e}), using fallback stub")
+
+        self.diagnoser = None
+        self._use_rag = False
 
     async def predict(self, symptoms: str) -> List[DiagnosisItem]:
         from src.main import DiagnosisItem

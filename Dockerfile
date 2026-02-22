@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 COPY backend/pyproject.toml backend/uv.lock ./
+# Railway: only base deps (no torch/ML), uses diagnose_light.py via HF API
 RUN uv sync --frozen --no-dev
 
 COPY backend/src/ ./src/
